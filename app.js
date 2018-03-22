@@ -4,9 +4,14 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:4200']
+}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
