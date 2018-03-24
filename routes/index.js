@@ -7,8 +7,12 @@ router.get('/', (req, res, next) => {
   const url = 'https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json';
 
   axios.get(url)
-    .then(respone => {
+    .then(response => {
       const gnomeData = response.data;
+      res.json(gnomeData);
+    })
+    .catch(err => {
+      next(err);
     });
 });
 
