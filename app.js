@@ -23,6 +23,12 @@ mongoose.connect('mongodb://localhost/gnomes', {
   reconnectTries: Number.MAX_VALUE
 });
 
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
@@ -40,12 +46,6 @@ app.use((req, res, next) => {
   app.locals.user = req.session.currentUser;
   next();
 });
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/auth', auth);
